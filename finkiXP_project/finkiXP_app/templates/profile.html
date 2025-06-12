@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body>
+<div style="background: linear-gradient(90deg, #8b5cf6, #6366f1);">
+    <nav class="navbar navbar-expand-lg pt-1 text-light container">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light fw-bolder" href="{% url 'index' %}">FINKI XP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+                <a class="nav-link active me-3" aria-current="page" href="{% url 'index' %}">Home</a>
+                <a class="nav-link me-3" href="{% url 'subjects' %}">Subjects</a>
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="text-light " style="background: linear-gradient(135deg, #f1f1f1, #dbeafe, #e0e7ff); min-height: 100vh;">
+    <div class="container py-5 text-light">
+        <div class="p-5 rounded shadow" style="background: linear-gradient(135deg, #3a0ca3, #4361ee);">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h2 class="fw-bold">Welcome, {{ request.user.username }} 👋</h2>
+                    <p class="mb-1"><i class="bi bi-star-fill text-warning"></i>
+                        <strong>Level:</strong> {{ user_profile.level }}</p>
+                    <p><i class="bi bi-lightning-fill text-info"></i> <strong>XP:</strong> {{ user_profile.xp }}</p>
+                </div>
+                <div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" alt="Profile" width="80">
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5 text-light">
+
+        <div>
+            <h4 class="fw-bold text-dark mb-4">📚 Your Uploaded Tasks</h4>
+            {% if user_tasks %}
+                <div class="row">
+                    {% for task in user_tasks %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100 border-0 shadow-sm" style="background-color: #f1f1f1;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">{{ task.title }}</h5>
+                                    <p class="card-text text-dark"><strong>Subject:</strong> {{ task.subject.name }}</p>
+                                    <p class="card-text text-dark"><strong>Year:</strong> {{ task.year }}</p>
+                                    <p class="card-text"><em>{{ task.description|truncatewords:20 }}</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-light">You haven’t uploaded any tasks yet. 🚀</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

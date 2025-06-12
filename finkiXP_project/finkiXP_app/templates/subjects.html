@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body>
+<div style="background: linear-gradient(90deg, #8b5cf6, #6366f1);">
+    <nav class="navbar navbar-expand-lg pt-1 text-light container">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light fw-bolder" href="{% url 'index' %}">FINKI XP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+                <a class="nav-link active me-3" aria-current="page" href="{% url 'index' %}">Home</a>
+                <a class="nav-link me-3" href="{% url 'subjects' %}">Subjects</a>
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="text-light" style="background: linear-gradient(135deg, #f1f1f1, #dbeafe, #e0e7ff); min-height: 100vh;">
+    <div class="container pt-5">
+        <h2 class="mb-4 text-center text-dark">📚 Choose a Subject</h2>
+        <div class="row">
+            {% for subject in subjects %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card border-0 shadow rounded-3 h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ subject.name }}</h5>
+                            <p class="card-text">Explore tasks related to {{ subject.name }}.</p>
+                            <a href="{% url 'subject-tasks' subject.id %}"
+                               class="btn btn-primary mt-auto rounded-pill shadow"
+                               style="background-color: #4e73df; border-color: #4e73df;">
+                                Go to tasks
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
